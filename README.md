@@ -1,4 +1,4 @@
-# CrossChainYieldHub
+# ChainFolio
 
 This project demonstrates a Yield Aggregator integrated with MEV Protection and a Cross-Chain Liquidity Aggregator. The application combines liquidity aggregation, yield optimization, and protection against front-running. It supports cross-chain asset bridging and includes a mock DEX for token swaps.
 
