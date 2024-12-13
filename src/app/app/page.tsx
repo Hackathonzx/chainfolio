@@ -20,7 +20,7 @@ export default function Dashboard() {
 
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <Container maxWidth="lg" sx={{ py: 4 }}>
         <Typography variant="h4" component="h1" gutterBottom>
           Welcome, {user?.username || 'User'}
@@ -92,7 +92,7 @@ export default function Dashboard() {
           </Grid>
         </Grid>
       </Container>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }

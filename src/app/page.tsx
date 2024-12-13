@@ -7,7 +7,7 @@ import Footer from '@/components/Footer';
 export default function HomePage() {
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <Container maxWidth="lg">
         <Box sx={{ textAlign: 'center', py: 8 }}>
           <Typography variant="h2" component="h1" gutterBottom>
@@ -53,7 +53,7 @@ export default function HomePage() {
           </Grid>
         </Grid>
       </Container>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }
