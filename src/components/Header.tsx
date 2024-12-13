@@ -1,6 +1,6 @@
 'use client';
 
-import Link from 'next/link';
+import { Link } from 'react-scroll';
 import { useUser } from '@/contexts/UserContext';
 import { useState } from 'react';
 import { AppBar, Toolbar, Button, IconButton, Menu, MenuItem, Typography, Box } from '@mui/material';
@@ -66,17 +66,25 @@ export default function Header() {
         </IconButton>
 
         <Box sx={{ display: { xs: 'none', md: 'block' } }}>
-          <Button color="inherit" component={Link} href="/yield-aggregation">
-            Yield Aggregation
+          <Button color="inherit">
+            <Link to="yield-aggregation" smooth={true} duration={500}>
+              Yield Aggregation
+            </Link>
           </Button>
-          <Button color="inherit" component={Link} href="/mev-protection">
-            MEV Protection
+          <Button color="inherit">
+            <Link to="mev-protection" smooth={true} duration={500}>
+              MEV Protection
+            </Link>
           </Button>
-          <Button color="inherit" component={Link} href="/cross-chain-liquidity">
-            Cross-Chain Liquidity
+          <Button color="inherit">
+            <Link to="cross-chain-liquidity" smooth={true} duration={500}>
+              Cross-Chain Liquidity
+            </Link>
           </Button>
-          <Button color="inherit" component={Link} href="/mock-dex">
-            Mock DEX
+          <Button color="inherit">
+            <Link to="mock-dex" smooth={true} duration={500}>
+              Mock DEX
+            </Link>
           </Button>
         </Box>
 
