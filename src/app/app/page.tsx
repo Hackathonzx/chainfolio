@@ -2,10 +2,7 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 import { Container, Typography, Grid, Card, CardContent, Button } from '@mui/material';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 import { useUser } from '@/contexts/UserContext';
 
 export default function Dashboard() {
@@ -20,7 +17,6 @@ export default function Dashboard() {
 
   return (
     <>
-      {/* <Header /> */}
       <Container maxWidth="lg" sx={{ py: 4 }}>
         <Typography variant="h4" component="h1" gutterBottom>
           Welcome, {user?.username || 'User'}
@@ -92,7 +88,6 @@ export default function Dashboard() {
           </Grid>
         </Grid>
       </Container>
-      {/* <Footer /> */}
     </>
   );
 }

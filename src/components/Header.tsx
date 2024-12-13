@@ -32,6 +32,16 @@ export default function Header() {
     handleUserMenuClose();
   };
 
+  const handleWalletConnect = () => {
+    // Implement wallet connection logic here
+    // For now, we'll simulate a connected wallet
+    const dummyUser = {
+      walletAddress: '0x1234...ABCD',
+    };
+    setUser(dummyUser);
+    handleUserMenuClose();
+  };
+
   const shortenAddress = (address: string) => {
     return `${address.slice(0, 6)}...${address.slice(-4)}`;
   };
@@ -108,10 +118,25 @@ export default function Header() {
           open={!user && Boolean(anchorEl)}
           onClose={handleUserMenuClose}
         >
+          <MenuItem component={Link} href="/oauth/login/github">
+            Sign in with GitHub
+          open={!user && Boolean(anchorEl)}
+          </MenuItem>
+          <MenuItem onClick={handleWalletConnect}>
+            Connect Wallet
+          </MenuItem>
+        </Menu>
+      </Toolbar>
+    </AppBar>
+  );
+}
+
+          onClose={handleUserMenuClose}
+        >
           <MenuItem component="a" href={`https://github.com/login/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID}`}>
             Sign in with GitHub
           </MenuItem>
-          <MenuItem onClick={() => {/* Implement wallet connect */}}>
+          <MenuItem onClick={handleWalletConnect}>
             Connect Wallet
           </MenuItem>
         </Menu>

@@ -2,13 +2,14 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
+interface User {
+  username?: string;
+  walletAddress?: string;
+}
+
 interface UserContextType {
-  user: {
-    id?: string;
-    username?: string;
-    walletAddress?: string;
-  } | null;
-  setUser: (user: any) => void;
+  user: User | null;
+  setUser: (user: User | null) => void;
 }
 
 const UserContext = createContext<UserContextType>({
@@ -17,7 +18,7 @@ const UserContext = createContext<UserContextType>({
 });
 
 export function UserProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     // Load user from localStorage on mount
@@ -25,7 +26,7 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
     if (savedUser) setUser(JSON.parse(savedUser));
   }, []);
 
-  const updateUser = (newUser: any) => {
+  const updateUser = (newUser: User | null) => {
     setUser(newUser);
     if (newUser) {
       localStorage.setItem('user', JSON.stringify(newUser));
