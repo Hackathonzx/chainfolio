@@ -3,62 +3,119 @@
 import Link from 'next/link';
 import { useUser } from '@/contexts/UserContext';
 import { useState } from 'react';
+import { AppBar, Toolbar, Button, IconButton, Menu, MenuItem, Typography, Box } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
 
 export default function Header() {
-  const { user } = useUser();
-  const [showAuthOptions, setShowAuthOptions] = useState(false);
+  const { user, setUser } = useUser();
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [menuAnchorEl, setMenuAnchorEl] = useState<null | HTMLElement>(null);
+
+  const handleMenuClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setMenuAnchorEl(event.currentTarget);
+  };
+
+  const handleUserMenuClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setMenuAnchorEl(null);
+  };
+
+  const handleUserMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    setUser(null);
+    handleUserMenuClose();
+  };
 
   const shortenAddress = (address: string) => {
     return `${address.slice(0, 6)}...${address.slice(-4)}`;
   };
 
   return (
-    <header className="p-4 bg-gray-800 text-white">
-      <nav className="flex justify-between items-center">
-        <ul className="flex space-x-4">
-          <li><Link href="/">Home</Link></li>
-          <li><Link href="/yield-aggregation">Yield Aggregation</Link></li>
-          <li><Link href="/mev-protection">MEV Protection</Link></li>
-          <li><Link href="/cross-chain-liquidity">Cross-Chain Liquidity</Link></li>
-          <li><Link href="/mock-dex">Mock DEX</Link></li>
-        </ul>
+    <AppBar position="static">
+      <Toolbar>
+        <Typography variant="h6" sx={{ flexGrow: 1 }}>
+          <Button color="inherit" component={Link} href="/">
+            Chainflow
+          </Button>
+        </Typography>
 
-        <div className="relative">
-          {user ? (
-            <button className="px-4 py-2 rounded bg-blue-600">
-              {user.walletAddress 
-                ? shortenAddress(user.walletAddress)
-                : user.username}
-            </button>
-          ) : (
-            <>
-              <button 
-                onClick={() => setShowAuthOptions(!showAuthOptions)}
-                className="px-4 py-2 rounded bg-blue-600"
-              >
-                Sign In
-              </button>
-              
-              {showAuthOptions && (
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg">
-                  <a 
-                    href={`https://github.com/login/oauth/authorize?client_id=Ov23liAxCnIWKyULnImt`}
-                    className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
-                  >
-                    Sign in with GitHub
-                  </a>
-                  <button 
-                    onClick={() => {/* Implement wallet connect */}}
-                    className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100"
-                  >
-                    Connect Wallet
-                  </button>
-                </div>
-              )}
-            </>
-          )}
-        </div>
-      </nav>
-    </header>
+        <IconButton
+          color="inherit"
+          aria-controls="nav-menu"
+          aria-haspopup="true"
+          onClick={handleMenuClick}
+          sx={{ display: { xs: 'block', md: 'none' } }}
+        >
+          <MenuIcon />
+        </IconButton>
+
+        <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+          <Button color="inherit" component={Link} href="/yield-aggregation">
+            Yield Aggregation
+          </Button>
+          <Button color="inherit" component={Link} href="/mev-protection">
+            MEV Protection
+          </Button>
+          <Button color="inherit" component={Link} href="/cross-chain-liquidity">
+            Cross-Chain Liquidity
+          </Button>
+          <Button color="inherit" component={Link} href="/mock-dex">
+            Mock DEX
+          </Button>
+        </Box>
+
+        <Menu
+          id="nav-menu"
+          anchorEl={menuAnchorEl}
+          open={Boolean(menuAnchorEl)}
+          onClose={handleMenuClose}
+        >
+          <MenuItem component={Link} href="/yield-aggregation">Yield Aggregation</MenuItem>
+          <MenuItem component={Link} href="/mev-protection">MEV Protection</MenuItem>
+          <MenuItem component={Link} href="/cross-chain-liquidity">Cross-Chain Liquidity</MenuItem>
+          <MenuItem component={Link} href="/mock-dex">Mock DEX</MenuItem>
+        </Menu>
+
+        {user ? (
+          <>
+            <Button color="inherit" onClick={handleUserMenuClick}>
+              {user.walletAddress ? shortenAddress(user.walletAddress) : user.username}
+            </Button>
+            <Menu
+              id="user-menu"
+              anchorEl={anchorEl}
+              open={Boolean(anchorEl)}
+              onClose={handleUserMenuClose}
+            >
+              <MenuItem onClick={handleLogout}>Logout</MenuItem>
+            </Menu>
+          </>
+        ) : (
+          <Button color="inherit" onClick={handleUserMenuClick}>
+            Sign In
+          </Button>
+        )}
+
+        <Menu
+          id="auth-menu"
+          anchorEl={anchorEl}
+          open={!user && Boolean(anchorEl)}
+          onClose={handleUserMenuClose}
+        >
+          <MenuItem component="a" href={`https://github.com/login/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID}`}>
+            Sign in with GitHub
+          </MenuItem>
+          <MenuItem onClick={() => {/* Implement wallet connect */}}>
+            Connect Wallet
+          </MenuItem>
+        </Menu>
+      </Toolbar>
+    </AppBar>
   );
 }

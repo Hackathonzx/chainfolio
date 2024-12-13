@@ -1,3 +1,5 @@
+'use client';
+
 import { Container, Typography, Button, Grid, Box } from '@mui/material';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -9,12 +11,12 @@ export default function HomePage() {
       <Container maxWidth="lg">
         <Box sx={{ textAlign: 'center', py: 8 }}>
           <Typography variant="h2" component="h1" gutterBottom>
-            Welcome to ChainFolio
+            Welcome to Chainflow
           </Typography>
           <Typography variant="h5" component="p" gutterBottom>
-            Yield Aggregator integrated with MEV Protection and Cross-Chain Liquidity Aggregator
+            A Next-Generation DeFi Platform
           </Typography>
-          <Button variant="contained" color="primary" href="/yield-aggregation" sx={{ mt: 4 }}>
+          <Button variant="contained" color="primary" href="/app" sx={{ mt: 4 }}>
             Get Started
           </Button>
         </Box>
@@ -25,7 +27,7 @@ export default function HomePage() {
                 Yield Aggregation
               </Typography>
               <Typography variant="body1" component="p">
-                Deposit ERC-20 tokens into yield protocols and automatically choose the optimal protocol for maximum yield.
+                Maximize your returns with automated yield farming strategies.
               </Typography>
             </Box>
           </Grid>
@@ -35,7 +37,7 @@ export default function HomePage() {
                 MEV Protection
               </Typography>
               <Typography variant="body1" component="p">
-                Execute transactions securely using a nonce-based replay protection mechanism.
+                Secure your transactions against MEV attacks.
               </Typography>
             </Box>
           </Grid>
@@ -45,7 +47,7 @@ export default function HomePage() {
                 Cross-Chain Liquidity
               </Typography>
               <Typography variant="body1" component="p">
-                Aggregate liquidity across DEXes and bridge assets to other chains securely.
+                Access liquidity across multiple chains seamlessly.
               </Typography>
             </Box>
           </Grid>
