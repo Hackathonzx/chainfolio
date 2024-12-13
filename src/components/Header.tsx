@@ -51,14 +51,28 @@ export default function Header() {
     handleUserMenuClose();
   };
 
-  const handleWalletConnect = () => {
-    // Implement wallet connection logic here
-    // For now, we'll simulate a connected wallet
-    const dummyUser = {
-      walletAddress: '0x1234...ABCD',
-    };
-    setUser(dummyUser);
-    handleUserMenuClose();
+  const handleWalletConnect = async () => {
+    try {
+      // Check if MetaMask is installed
+      if (typeof window.ethereum !== 'undefined') {
+        // Request account access
+        const accounts = await window.ethereum.request({ 
+          method: 'eth_requestAccounts' 
+        });
+        
+        if (accounts.length > 0) {
+          const walletAddress = accounts[0];
+          setUser({ walletAddress });
+          handleAuthMenuClose(); // Close the auth menu
+          window.location.href = '/app'; // Redirect to app page
+        }
+      } else {
+        alert('Please install MetaMask to connect your wallet');
+      }
+    } catch (error) {
+      console.error('Error connecting wallet:', error);
+      alert('Failed to connect wallet');
+    }
   };
 
   const shortenAddress = (address: string) => {
