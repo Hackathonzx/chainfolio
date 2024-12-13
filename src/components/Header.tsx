@@ -120,7 +120,7 @@ export default function Header() {
         >
           <MenuItem
             component="a"
-            href={`https://github.com/login/oauth/authorize?client_id=Ov23liAxCnIWKyULnImt')}`}
+            href={`https://github.com/login/oauth/authorize?client_id=Ov23liAxCnIWKyULnImt`}
           >
             Sign in with GitHub
           </MenuItem>
