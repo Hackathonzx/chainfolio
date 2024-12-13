@@ -14,7 +14,7 @@ import {
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import Image from 'next/image';
-import logo from '@/public/logo.png'; // Adjust the path to your logo image
+// import logo from '@/public/logo.png'; // Adjust the path to your logo image
 
 export default function Header() {
   const { user, setUser } = useUser();
@@ -24,6 +24,7 @@ export default function Header() {
   const handleMobileMenuClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setMobileMenuAnchorEl(event.currentTarget);
   };
+
 
   const handleMobileMenuClose = () => {
     setMobileMenuAnchorEl(null);
@@ -61,7 +62,7 @@ export default function Header() {
       <Toolbar>
         {/* Logo */}
         <IconButton edge="start" color="inherit" href="/" sx={{ mr: 2 }}>
-          <Image src={logo} alt="Chainflow Logo" width={40} height={40} />
+          <Image src='/logo.jpeg' alt="Chainflow" width={40} height={40} />
         </IconButton>
 
         {/* Desktop Menu */}
