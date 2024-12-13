@@ -42,7 +42,7 @@ export default function Header() {
               {showAuthOptions && (
                 <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg">
                   <a 
-                    href={`https://github.com/login/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID}`}
+                    href={`https://github.com/login/oauth/authorize?client_id=Ov23liAxCnIWKyULnImt`}
                     className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
                   >
                     Sign in with GitHub
