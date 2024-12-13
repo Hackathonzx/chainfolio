@@ -9,8 +9,8 @@ export default function GitHubLogin() {
   const { setUser } = useUser();
 
   useEffect(() => {
-    // Simulate authentication by setting a dummy user
-    const dummyUser = {
+    const fetchGitHubUser = async () => {
+      try {
         // Simulate fetching user data from GitHub API
         const response = await fetch('https://api.github.com/users/octocat');
         const data = await response.json();
@@ -19,4 +19,11 @@ export default function GitHubLogin() {
       } catch (error) {
         console.error('Failed to fetch user data', error);
         router.push('/');
-      }    };    fetchGitHubUser();  }, [router, setUser]);  return <div>Logging in...</div>;}
+      }
+    };
+
+    fetchGitHubUser();
+  }, [router, setUser]);
+
+  return <div>Logging in...</div>;
+}
