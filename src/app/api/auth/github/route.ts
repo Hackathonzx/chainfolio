@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
 
 export async function POST(request: Request) {
   try {
@@ -30,15 +29,11 @@ export async function POST(request: Request) {
 
     const githubUser = await userResponse.json();
 
-    // Create or update user in database
-    const user = await prisma.user.upsert({
-      where: { githubId: githubUser.id.toString() },
-      update: { username: githubUser.login },
-      create: {
-        githubId: githubUser.id.toString(),
-        username: githubUser.login,
-      },
-    });
+    // Simulate user data handling
+    const user = {
+      githubId: githubUser.id.toString(),
+      username: githubUser.login,
+    };
 
     return NextResponse.json(user);
   } catch (error) {
