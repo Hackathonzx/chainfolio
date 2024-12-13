@@ -20,11 +20,11 @@ export default function Header() {
   const { user, setUser } = useUser();
   const [mobileMenuAnchorEl, setMobileMenuAnchorEl] = useState<null | HTMLElement>(null);
   const [userMenuAnchorEl, setUserMenuAnchorEl] = useState<null | HTMLElement>(null);
+  const [authMenuAnchorEl, setAuthMenuAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleMobileMenuClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setMobileMenuAnchorEl(event.currentTarget);
   };
-
 
   const handleMobileMenuClose = () => {
     setMobileMenuAnchorEl(null);
@@ -36,6 +36,14 @@ export default function Header() {
 
   const handleUserMenuClose = () => {
     setUserMenuAnchorEl(null);
+  };
+
+  const handleAuthMenuClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAuthMenuAnchorEl(event.currentTarget);
+  };
+
+  const handleAuthMenuClose = () => {
+    setAuthMenuAnchorEl(null);
   };
 
   const handleLogout = () => {
@@ -106,9 +114,25 @@ export default function Header() {
               </Menu>
             </>
           ) : (
-            <Button color="inherit" onClick={handleUserMenuClick}>
-              Sign In
-            </Button>
+            <>
+              <Button color="inherit" onClick={handleAuthMenuClick}>
+                Sign In
+              </Button>
+              <Menu
+                id="auth-menu"
+                anchorEl={authMenuAnchorEl}
+                open={Boolean(authMenuAnchorEl)}
+                onClose={handleAuthMenuClose}
+              >
+                <MenuItem
+                  component="a"
+                  href={`https://github.com/login/oauth/authorize?client_id=Ov23liAxCnIWKyULnImt`}
+                >
+                  Sign in with GitHub
+                </MenuItem>
+                <MenuItem onClick={handleWalletConnect}>Connect Wallet</MenuItem>
+              </Menu>
+            </>
           )}
         </Box>
 
@@ -153,7 +177,7 @@ export default function Header() {
           {user ? (
             <MenuItem onClick={handleLogout}>Logout</MenuItem>
           ) : (
-            <MenuItem onClick={handleUserMenuClick}>Sign In</MenuItem>
+            <MenuItem onClick={handleAuthMenuClick}>Sign In</MenuItem>
           )}
         </Menu>
       </Toolbar>
