@@ -1,7 +1,6 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 
 interface User {
   username?: string;
@@ -20,19 +19,12 @@ const UserContext = createContext<UserContextType>({
 
 export function UserProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
-  const router = useRouter();
 
   useEffect(() => {
     // Load user from localStorage on mount
     const savedUser = localStorage.getItem('user');
     if (savedUser) setUser(JSON.parse(savedUser));
   }, []);
-
-  useEffect(() => {
-    if (user === null) {
-      router.push('/');
-    }
-  }, [user, router]);
 
   const updateUser = (newUser: User | null) => {
     setUser(newUser);
