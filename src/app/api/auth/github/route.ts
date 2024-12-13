@@ -12,8 +12,8 @@ export async function POST(request: Request) {
         Accept: 'application/json',
       },
       body: JSON.stringify({
-        client_id: process.env.GITHUB_CLIENT_ID,
-        client_secret: process.env.GITHUB_CLIENT_SECRET,
+        client_id: 'Ov23liAxCnIWKyULnImt',
+        client_secret: '1611692bef5492d48520d3a9993581376853d9c8',
         code,
       }),
     });
