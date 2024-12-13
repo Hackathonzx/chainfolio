@@ -1,7 +1,5 @@
 'use client';
 
-
-
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
@@ -14,11 +12,10 @@ export default function HomePage() {
         const res = await fetch('https://ipapi.co/json/');
         const data = await res.json();
         const countryCode = data.country_code.toLowerCase();
-        const locale = countryCode === 'fr' ? 'fr' : 'en'; // Add more conditions as needed
-        router.push(`/${locale}`);
+        router.push('/'); // Redirect to the homepage
       } catch (error) {
         console.error('Error detecting location:', error);
-        router.push('/en'); // Default to English if detection fails
+        router.push('/'); // Default to homepage if detection fails
       }
     }
 
