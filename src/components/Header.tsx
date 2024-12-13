@@ -120,8 +120,7 @@ export default function Header() {
         >
           <MenuItem
             component="a"
-            href={`https://github.com/login/oauth/authorize?client_id=Ov23liAxCnIWKyULnImt&redirect_uri=${encodeURIComponent(
-              'http://localhost:3000/oauth/signup/github'
+            href={`https://github.com/login/oauth/authorize?client_id=Ov23liAxCnIWKyULnImt'
             )}`}
           >
             Sign in with GitHub
