@@ -1,16 +1,15 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useUser } from '@/contexts/UserContext';
 
 export default function GitHubSignup() {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const { setUser } = useUser();
 
   useEffect(() => {
-    const code = searchParams.get('code');
+    const code = new URLSearchParams(window.location.search).get('code');
 
     if (!code) {
       // If no code is present, redirect to home page
@@ -32,7 +31,7 @@ export default function GitHubSignup() {
     };
 
     fetchGitHubUser();
-  }, [router, searchParams, setUser]);
+  }, [router, setUser]);
 
   return <div>Signing up...</div>;
 }
