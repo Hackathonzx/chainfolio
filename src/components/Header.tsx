@@ -3,28 +3,38 @@
 import { Link } from 'react-scroll';
 import { useUser } from '@/contexts/UserContext';
 import { useState } from 'react';
-import { AppBar, Toolbar, Button, IconButton, Menu, MenuItem, Typography, Box } from '@mui/material';
+import {
+  AppBar,
+  Toolbar,
+  Button,
+  IconButton,
+  Menu,
+  MenuItem,
+  Box,
+} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
+import Image from 'next/image';
+import logo from '@/public/logo.png'; // Adjust the path to your logo image
 
 export default function Header() {
   const { user, setUser } = useUser();
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [menuAnchorEl, setMenuAnchorEl] = useState<null | HTMLElement>(null);
+  const [mobileMenuAnchorEl, setMobileMenuAnchorEl] = useState<null | HTMLElement>(null);
+  const [userMenuAnchorEl, setUserMenuAnchorEl] = useState<null | HTMLElement>(null);
 
-  const handleMenuClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setMenuAnchorEl(event.currentTarget);
+  const handleMobileMenuClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setMobileMenuAnchorEl(event.currentTarget);
+  };
+
+  const handleMobileMenuClose = () => {
+    setMobileMenuAnchorEl(null);
   };
 
   const handleUserMenuClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMenuClose = () => {
-    setMenuAnchorEl(null);
+    setUserMenuAnchorEl(event.currentTarget);
   };
 
   const handleUserMenuClose = () => {
-    setAnchorEl(null);
+    setUserMenuAnchorEl(null);
   };
 
   const handleLogout = () => {
@@ -49,23 +59,13 @@ export default function Header() {
   return (
     <AppBar position="static">
       <Toolbar>
-        <Typography variant="h6" sx={{ flexGrow: 1 }}>
-          <Button color="inherit" component={Link} href="/">
-            Chainflow
-          </Button>
-        </Typography>
-
-        <IconButton
-          color="inherit"
-          aria-controls="nav-menu"
-          aria-haspopup="true"
-          onClick={handleMenuClick}
-          sx={{ display: { xs: 'block', md: 'none' } }}
-        >
-          <MenuIcon />
+        {/* Logo */}
+        <IconButton edge="start" color="inherit" href="/" sx={{ mr: 2 }}>
+          <Image src={logo} alt="Chainflow Logo" width={40} height={40} />
         </IconButton>
 
-        <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+        {/* Desktop Menu */}
+        <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
           <Button color="inherit">
             <Link to="yield-aggregation" smooth={true} duration={500}>
               Yield Aggregation
@@ -88,53 +88,72 @@ export default function Header() {
           </Button>
         </Box>
 
-        <Menu
-          id="nav-menu"
-          anchorEl={menuAnchorEl}
-          open={Boolean(menuAnchorEl)}
-          onClose={handleMenuClose}
-        >
-          <MenuItem component={Link} href="/yield-aggregation">Yield Aggregation</MenuItem>
-          <MenuItem component={Link} href="/mev-protection">MEV Protection</MenuItem>
-          <MenuItem component={Link} href="/cross-chain-liquidity">Cross-Chain Liquidity</MenuItem>
-          <MenuItem component={Link} href="/mock-dex">Mock DEX</MenuItem>
-        </Menu>
-
-        {user ? (
-          <>
+        {/* User Menu */}
+        <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+          {user ? (
+            <>
+              <Button color="inherit" onClick={handleUserMenuClick}>
+                {user.walletAddress ? shortenAddress(user.walletAddress) : user.username}
+              </Button>
+              <Menu
+                id="user-menu"
+                anchorEl={userMenuAnchorEl}
+                open={Boolean(userMenuAnchorEl)}
+                onClose={handleUserMenuClose}
+              >
+                <MenuItem onClick={handleLogout}>Logout</MenuItem>
+              </Menu>
+            </>
+          ) : (
             <Button color="inherit" onClick={handleUserMenuClick}>
-              {user.walletAddress ? shortenAddress(user.walletAddress) : user.username}
+              Sign In
             </Button>
-            <Menu
-              id="user-menu"
-              anchorEl={anchorEl}
-              open={Boolean(anchorEl)}
-              onClose={handleUserMenuClose}
-            >
-              <MenuItem onClick={handleLogout}>Logout</MenuItem>
-            </Menu>
-          </>
-        ) : (
-          <Button color="inherit" onClick={handleUserMenuClick}>
-            Sign In
-          </Button>
-        )}
+          )}
+        </Box>
 
-        <Menu
-          id="auth-menu"
-          anchorEl={anchorEl}
-          open={!user && Boolean(anchorEl)}
-          onClose={handleUserMenuClose}
+        {/* Mobile Menu Icon */}
+        <IconButton
+          color="inherit"
+          aria-label="menu"
+          onClick={handleMobileMenuClick}
+          sx={{ display: { xs: 'flex', md: 'none' } }}
         >
-          <MenuItem
-            component="a"
-            href={`https://github.com/login/oauth/authorize?client_id=Ov23liAxCnIWKyULnImt`}
-          >
-            Sign in with GitHub
+          <MenuIcon />
+        </IconButton>
+
+        {/* Mobile Menu */}
+        <Menu
+          id="mobile-menu"
+          anchorEl={mobileMenuAnchorEl}
+          open={Boolean(mobileMenuAnchorEl)}
+          onClose={handleMobileMenuClose}
+          sx={{ display: { xs: 'block', md: 'none' } }}
+        >
+          <MenuItem onClick={handleMobileMenuClose}>
+            <Link to="yield-aggregation" smooth={true} duration={500}>
+              Yield Aggregation
+            </Link>
           </MenuItem>
-          <MenuItem onClick={handleWalletConnect}>
-            Connect Wallet
+          <MenuItem onClick={handleMobileMenuClose}>
+            <Link to="mev-protection" smooth={true} duration={500}>
+              MEV Protection
+            </Link>
           </MenuItem>
+          <MenuItem onClick={handleMobileMenuClose}>
+            <Link to="cross-chain-liquidity" smooth={true} duration={500}>
+              Cross-Chain Liquidity
+            </Link>
+          </MenuItem>
+          <MenuItem onClick={handleMobileMenuClose}>
+            <Link to="mock-dex" smooth={true} duration={500}>
+              Mock DEX
+            </Link>
+          </MenuItem>
+          {user ? (
+            <MenuItem onClick={handleLogout}>Logout</MenuItem>
+          ) : (
+            <MenuItem onClick={handleUserMenuClick}>Sign In</MenuItem>
+          )}
         </Menu>
       </Toolbar>
     </AppBar>
