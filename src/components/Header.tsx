@@ -118,21 +118,6 @@ export default function Header() {
           open={!user && Boolean(anchorEl)}
           onClose={handleUserMenuClose}
         >
-          <MenuItem component={Link} href="/oauth/login/github">
-            Sign in with GitHub
-          open={!user && Boolean(anchorEl)}
-          </MenuItem>
-          <MenuItem onClick={handleWalletConnect}>
-            Connect Wallet
-          </MenuItem>
-        </Menu>
-      </Toolbar>
-    </AppBar>
-  );
-}
-
-          onClose={handleUserMenuClose}
-        >
           <MenuItem component="a" href={`https://github.com/login/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID}`}>
             Sign in with GitHub
           </MenuItem>
